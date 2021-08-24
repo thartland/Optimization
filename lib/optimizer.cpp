@@ -33,11 +33,11 @@ void backtrack(VectorXf &xk1, VectorXf &xk, VectorXf &pk,\
     }
 }
 
-void optimizer(VectorXf &x, double tol, \
+void optimizer(VectorXf &x, double tol, int max_iterations,\
 		double (*func)(VectorXf &), void (*grad)(VectorXf &, VectorXf &))
 {
   bool within_tol = false;
-  int max_iterations = 1000;
+  //int max_iterations = 1000;
   int n = x.size();
 
   VectorXf xk = VectorXf::Zero(n);

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Eigen>
 #include <math.h>
-#include "rosenbrock.hpp"
+#include "optimizer.hpp"
 
 using namespace std;
 using namespace Eigen;
@@ -9,16 +9,22 @@ using namespace Eigen;
 double fun_eval(VectorXf &);
 void grad_eval(VectorXf &, VectorXf &);
 
-int main()
+int main(int argc, char* argv[0])
 {
-  int n = 10; // problem dimension
+  if(argc < 3)
+  {
+    printf("incorrect usage, please specify problem dimension and tolerance\n");
+    return 1;
+  }
+  const int n = std::stod(argv[1]); // user specifies problem dimension
+  const double tol = std::stod(argv[2]);
+  const int max_iter = 1000;
   VectorXf x0 = VectorXf::Zero(n);
   VectorXf x  = VectorXf::Zero(n);
   VectorXf g  = VectorXf::Zero(n);
   x0.setRandom();
-  double tol = 1.e-4;
   x = x0;
-  optimizer(x, tol, fun_eval, grad_eval);
+  optimizer(x, tol, max_iter, fun_eval, grad_eval);
   printf("x0 = (");
   for(int i = 0; i < n-1; i++)
   {
